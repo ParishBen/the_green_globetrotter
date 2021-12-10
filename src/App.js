@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 
 let finalArr=[]
 let filteredArr=[]
-
+let rawArr = []
 
 const julius = (arrObj) => {
    let rtrnArr = [];
@@ -73,16 +73,19 @@ class App extends Component {
         adults: '2'
       }).then(function(response){
         let holdIt = document.getElementById('flight-info-holder');
-        let flightArray;
-         flightArray = response.data;
+        // let flightArray;
+        //  flightArray = response.data;
+         rawArr=response.data;
+         //console.log(rawArr.push(response.data))
         //let anArr = document.getElementById('arr');
-        flightArray.forEach((flightObj) => {
-         julius(flightObj)
-          console.log(julius(flightObj))
-        })
-        console.log("first gothru then ",flightArray, "     ", flightArray.forEach((flightObj) => {
-          julius(flightObj)
-      }))
+      //   flightArray.forEach((flightObj) => {
+      //    julius(flightObj)
+      //     console.log(julius(flightObj))
+      //   })
+      //   console.log("first gothru then ",flightArray, "     ", flightArray.forEach((flightObj) => {
+      //     julius(flightObj)
+      // }))
+console.log(rawArr)
       // .then((filled) => {
       //   this.julius(filled.data)
       //   console.log(filled, filled.data)
@@ -91,6 +94,26 @@ class App extends Component {
         console.log(responseError.code);
       });}
 
+      delayed = setTimeout(() => {              // Will reFetch all the bands after 8 seconds IF Spotify didn't return all the bands properly
+        //rawArr.length = 1;
+        rawArr.forEach((arrobj) => {
+          julius(arrobj)
+        }
+        )
+        
+        }, 2000)
+
+        ddelayed = setTimeout(() => {              // Will reFetch all the bands after 8 seconds IF Spotify didn't return all the bands properly
+        
+          finalArr.forEach((diesel) => {this.airlineArrChecker(diesel)})
+          
+          }, 2200)
+
+          dlogger = setTimeout(() => {              // Will reFetch all the bands after 8 seconds IF Spotify didn't return all the bands properly
+        
+            console.log(filteredArr)
+            
+            }, 2500)
       render(){
       return (
         <div className="App">
@@ -112,9 +135,12 @@ class App extends Component {
         Learn React
         </a>
         {/* {flightFetcher()} */}
-        {finalArr.forEach((diesel) => {this.airlineArrChecker(diesel)})}
+        { 
+        this.delayed
+        }
+        {this.ddelayed}
         </header>
-        {console.log(filteredArr && filteredArr)}
+{this.dlogger}       
         
         </div>
         );
