@@ -42,7 +42,7 @@ class App extends Component {
 //console.log(finalArr)
 
  airlineArrChecker = (quest) => {
-    let greenAirlines = ['TR', 'TH', 'TY','TF', 'GT']
+    let greenAirlines = ['NH', 'THhg', 'TYhg','TFgh', 'GThg']
     //quest['airlines'].length == 1 ? greenAirlines.includes(quest[])
     let airSet = new Set(quest['airlines'])
     let vals = Array.from(airSet.values())
@@ -105,13 +105,30 @@ console.log(rawArr)
 
         ddelayed = setTimeout(() => {              // Will reFetch all the bands after 8 seconds IF Spotify didn't return all the bands properly
         
-          finalArr.forEach((diesel) => {this.airlineArrChecker(diesel)})
           
+          finalArr.forEach((diesel) => {this.airlineArrChecker(diesel)})
+          let holdarr = [];
+          let objhold = {};
+          console.log(filteredArr)
+          for(let i in filteredArr){
+            let id = filteredArr[i]["id"]
+            objhold[id] = filteredArr[i]
+            console.log(filteredArr[i])
+          }
+          for(let i in objhold){
+            console.log(objhold)
+            if(i !== undefined) 
+            holdarr.push(objhold[i]) 
+            
+          }
+          filteredArr =   holdarr;  //new Set(filteredArr)
+          console.log(filteredArr,'filteredArr', 'then holdarr', holdarr)
+          return filteredArr
           }, 2200)
 
           dlogger = setTimeout(() => {              // Will reFetch all the bands after 8 seconds IF Spotify didn't return all the bands properly
         
-            console.log(filteredArr)
+            console.log(filteredArr, "cmon man")
             
             }, 2500)
       render(){
@@ -135,10 +152,9 @@ console.log(rawArr)
         Learn React
         </a>
         {/* {flightFetcher()} */}
-        { 
-        this.delayed
-        }
-        {this.ddelayed}
+        <div id="delayed fetch" style={{display:'none'}}>{this.delayed}</div>
+        <div id="delayed fetcher" style={{display:'none'}}>{this.ddelayed}</div>
+        
         </header>
 {this.dlogger}       
         
