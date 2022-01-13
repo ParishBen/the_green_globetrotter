@@ -32,7 +32,7 @@ componentDidUpdate(){
 
 
     
-//////////////////////////////////////////
+/////////////////////////////////////////////////
          flightFetcher = () => {
             let bigtimeArr = [];
             amadeus.shopping.flightOffersSearch.get({
