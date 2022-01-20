@@ -37,8 +37,8 @@ componentDidUpdate(){
             let bigtimeArr = [];
             amadeus.shopping.flightOffersSearch.get({
               originLocationCode: 'SYD',
-              destinationLocationCode: 'NYC',
-              departureDate: '2021-12-20',
+              destinationLocationCode: 'AVV',
+              departureDate: '2022-01-20',
               adults: '2'
             }).then((response) => {
              
@@ -54,7 +54,7 @@ componentDidUpdate(){
             })
             
             .catch(function(responseError){
-              console.log(responseError.code);
+              console.log(responseError);
             });}
 //////////////////////////////////////////////////////
 

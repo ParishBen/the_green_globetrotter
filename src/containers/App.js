@@ -81,7 +81,7 @@ rawFlightsCallBack = (fetchedFlights) => {
         
         </header>
 <TripFetcher flights = {this.rawFlightsCallBack}/>  
-<FlightFixer flights = {this.state.flights.length && this.state.flights}/>    
+{this.state.flights.length > 0 ? <FlightFixer flights = {this.state.flights}/> :''}   
 {this.state.flights.length && console.log(this.state)}
 </div>
 );
