@@ -38,9 +38,7 @@ constructor(){
                this.grabAllAirLines(arrObj["itineraries"][0]['segments'])
            let price = arrObj["price"]["total"]
            let currency = arrObj["price"]["currency"]
-            //rtrnArr.push({id:flightId, duration: duration, airlines: airLines, price: price, currency:currency})
             let rtrnObj = {id:flightId, duration: duration, airlines: airLines, price: price, currency:currency}
-           //console.log(rtrnArr[0])
            return refinedObjs.push(rtrnObj)
          }
         }
@@ -55,16 +53,14 @@ constructor(){
         }
 
         
-        
-        
         responseDataToNewArr = () => {
             let toRefined = this.props.flights && this.props.flights.forEach((arrobj) => {
                 this.tripObjArrCreator(arrobj)
-            }
-            )
+              })
+            
             console.log("ran responsedataToNewArray "+'refinedObjs: '+refinedObjs)
             return toRefined; 
-        }//, 2000)
+        }
         
         
         
@@ -78,25 +74,14 @@ constructor(){
         greenAirlinesCheck = (tripObj) => { //old AirlineChecker
             console.log(refinedObjs, "in greenairlinesCheck")
              let greenAirlines = ['NHg', 'QF', 'TYhg','TFgh', 'GThg']
-             //quest['airlines'].length == 1 ? greenAirlines.includes(quest[])
-            //  let airSet = new Set(trip['airlines'])
-            //  let vals = Array.from(airSet.values())
-            //console.log(airSet,airSet.values(), Array.from(airSet.values()))
-             //let anothaOne = [];
-             //anothaOne.push(quest['airlines'][0])
-             for(let i=0; i< tripObj['airlines'].length; i++){//i<vals.length; i++){
+             
+             for(let i=0; i< tripObj['airlines'].length; i++){
                  console.log(tripObj['airlines'].length, tripObj['airlines'][i])
-                 //if(!anothaOne.includes(quest['airlines'][i])){
-                // anothaOne.push(quest['airlines'][i])
-                // console.log(anothaOne)
-                 //if(greenAirlines.includes(vals[i]) ){
-                     if(greenAirlines.includes(tripObj['airlines'][i]))
-                      filteredArr.push(tripObj)
-                  
+                 if(greenAirlines.includes(tripObj['airlines'][i])){
+                    filteredArr.push(tripObj) 
                  }
-                    console.log(filteredArr)
-                 //return filteredArr
              }
+        }
 
           refinedObjsToGreenArray = () => {  //old ddelayed which took arr of flight array objs to check it against green
                 //addToFilteredArr()
@@ -116,24 +101,27 @@ constructor(){
                  holdarr.push(objhold[i]) 
                  
                }
-               filteredArr =   holdarr;  //new Set(filteredArr)
+               filteredArr =   holdarr;  // filteredArr now can't have any duplicated flight data
                
                console.log(filteredArr,'filteredArr', 'then holdarr', holdarr)
                 this.setState({
                    greenFlights: filteredArr
                })
                console.log(this.state)
-               } //, 2200)
-            //    sillyFunc = () => {
-            //     this.props.flights && refinedObjs.length > 0 && console.log('silly') && this.refinedObjsToGreenArray()
-            //    }
+               } 
+
+               renderList = () => {
+                   if(filteredArr.length && this.state.greenFlights.length)
+                   return this.state.greenFlights.map(flight => {
+                       return <li>Airlines: {flight.airlines.length > 1 ? flight.airlines[0]+" and "+flight.airlines[1] : flight.airlines[0]} Duration: {flight.duration} Price: {flight.price+' '+flight.currency} </li>
+                   })
+               }
                render(){
         return(
             
             <div>
-            {/* {this.responseDataToNewArr()} */}
-            {/* {this.props.flights && this.checks()} */}
-            {filteredArr.length  && console.log(this.state.greenFlights)} 
+        
+            {<ul>{filteredArr.length  && this.renderList()}</ul>}
             
             </div>
         )

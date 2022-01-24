@@ -22,10 +22,7 @@ constructor(){
             this.props.flights(this.state.flighters)
         }
     }
-componentDidUpdate(){
-    if(this.state.flighters.length > 0)
-    this.props.flights(this.state.flighters)
-}
+
 
 
 
@@ -38,19 +35,19 @@ componentDidUpdate(){
             amadeus.shopping.flightOffersSearch.get({
               originLocationCode: 'SYD',
               destinationLocationCode: 'AVV',
-              departureDate: '2022-01-20',
+              departureDate: '2022-01-25',
               adults: '2'
             }).then((response) => {
              
                 bigtimeArr = response.data;
-                console.log(bigtimeArr)
+                //console.log(bigtimeArr)
                this.props.flights && this.props.flights(response.data);
             
             })
             .then(() => {
-                console.log("bigtimearr",bigtimeArr)
+                //console.log("bigtimearr",bigtimeArr)
                 
-                this.state.flighters = bigtimeArr
+                //this.state.flighters = bigtimeArr
             })
             
             .catch(function(responseError){
@@ -59,28 +56,20 @@ componentDidUpdate(){
 //////////////////////////////////////////////////////
 
              
-
-                dlogger = setTimeout(() => {              // Will reFetch all the bands after 8 seconds IF Spotify didn't return all the bands properly
-        
-                    console.log(this.state.flighters, "cmon man", this.props)
-                    //this.filteredArrFnct()
-                    //this.state.flighters !== [] && this.props.flights && this.props.flights(this.state.flighters)
-                    //this.wickedState();
-                    //this.crazyState(filteredArr)
-                    }, 2500)
-
-
-           
-
          render(){
              
              return (
+                // <div style={{display:'none'}}>
                 <div>
-                    { this.state.flighters.length && this.props.flights && this.props.flights(this.state.flighters)}
+                    {/* { this.state.flighters.length && this.props.flights && this.props.flights(this.state.flighters)} */}
                 {/* {this.responseDataToNewArr()}
                 {   this.refinedObjsToGreenArray()} */}
-                {this.dlogger}
                 {/* {this.state.flighters && this.state.flighters.length > 0 && this.dlogs()} */}
+                <form>
+                    Leaving From (airport code): <input type='text'/>
+                    Destination (airport code): <input type='text'/>
+                    <input type='submit'/>
+                    </form>
                 {this.state.flighters.length > 0 && console.log(this.state)}
                 </div>
                 
