@@ -11,16 +11,15 @@ export default class TripFetcher extends Component{
 constructor(){
     super();
     this.state = {
-        flighters: []
+        origin: null,
+        destination: null,
+        departureDate: '',
+        persons: null, 
     }
 }
 
     componentDidMount(){
-         this.flightFetcher()
-        console.log(this.props.flights)
-        if(this.state.flighters.length > 1){
-            this.props.flights(this.state.flighters)
-        }
+       
     }
 
 
@@ -30,47 +29,65 @@ constructor(){
 
     
 /////////////////////////////////////////////////
-         flightFetcher = () => {
+         flightFetcher = (event) => {
+             event.preventDefault()
+             console.log(
+                 'fetching flights!'
+             )
+            // this.reset()
             let bigtimeArr = [];
             amadeus.shopping.flightOffersSearch.get({
-              originLocationCode: 'SYD',
-              destinationLocationCode: 'AVV',
-              departureDate: '2022-01-25',
-              adults: '2'
+              originLocationCode: `${this.state.origin}`,
+              destinationLocationCode: `${this.state.destination}`,
+              departureDate: `${this.state.departureDate}`,
+              adults: parseInt(`${this.state.persons}`)
             }).then((response) => {
              
                 bigtimeArr = response.data;
                 //console.log(bigtimeArr)
                this.props.flights && this.props.flights(response.data);
-            
+               this.setState({
+                origin: null,
+                destination: null,
+                departureDate: '',
+                persons: null, 
+                        })
             })
             .then(() => {
                 //console.log("bigtimearr",bigtimeArr)
                 
-                //this.state.flighters = bigtimeArr
+                //this.state.flights = bigtimeArr
             })
             
             .catch(function(responseError){
               console.log(responseError);
             });}
 //////////////////////////////////////////////////////
+handleFormInfoChange(event) {                 // Signing in to Landing Page handling value changes
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+// reset = () =>{
+//     document.getElementById('origin').value = ''
+//     document.getElementById('destination').value = ''
+//     document.getElementById('departureDate').value = ''
+//     document.getElementById('persons').value = ''
+//     //document.getElementById('form').firstChild.textContent = ''
+// }
 
-             
          render(){
              
              return (
-                // <div style={{display:'none'}}>
                 <div>
-                    {/* { this.state.flighters.length && this.props.flights && this.props.flights(this.state.flighters)} */}
-                {/* {this.responseDataToNewArr()}
-                {   this.refinedObjsToGreenArray()} */}
-                {/* {this.state.flighters && this.state.flighters.length > 0 && this.dlogs()} */}
-                <form>
-                    Leaving From (airport code): <input type='text'/>
-                    Destination (airport code): <input type='text'/>
+                    
+                <form id='form' onSubmit={(event) => this.flightFetcher(event)}>
+                    Leaving From (airport code): <input id='origin' value={this.state.origin} type='text' name='origin' onChange={(event) => this.handleFormInfoChange(event)}/>
+                    Destination (airport code): <input id='destination' value={this.state.destination} type='text' name='destination' onChange={(event) => this.handleFormInfoChange(event)}/>
+                    Date of Departure: <input id='departureDate' type='date' value={this.state.departureDate} name='departureDate' onChange={(event) => this.handleFormInfoChange(event)}/>
+                    How many Persons? <input id='persons' type='text' name='persons' value={this.state.persons} onChange={(event) => this.handleFormInfoChange(event)}/>
                     <input type='submit'/>
                     </form>
-                {this.state.flighters.length > 0 && console.log(this.state)}
                 </div>
                 
              )
