@@ -51,14 +51,11 @@ constructor(){
                 this.tripObjArrCreator(arrobj)
               })
             
-            console.log("ran responsedataToNewArray "+'refinedObjs: '+refinedObjs)
             return toRefined; 
         }
         
         
-        
         addToFilteredArr = () => {            // This takes refinedObjs array and now checks to see if any trips are with Green Airlines
-            console.log(refinedObjs.length, 'running greenAirlinesCheck')
             refinedObjs.forEach((aFlightObj) => {this.greenAirlinesCheck(aFlightObj)})
             this.refinedObjsToGreenArray()
         }
@@ -83,20 +80,20 @@ constructor(){
                for(let i in filteredArr){
                    console.log(i)
                    //console.log(filteredArr[i])
-                 let id = filteredArr[i]["id"] 
-                 objhold[id] = filteredArr[i]  // Now key in objhold points to entire flight data
-               }
+                  let id = filteredArr[i]["id"] 
+                  objhold[id] = filteredArr[i]  // Now key in objhold points to entire flight data
+                }
                for(let i in objhold){
                  if(i !== undefined) // Covering special case
-                 holdarr.push(objhold[i]) // All unique Green Flights now in 
-                 
+                   holdarr.push(objhold[i]) // All unique Green Flights now in holdarr 
                }
-               filteredArr =   holdarr;  // filteredArr now composed of all unique flight data values
+               
+               filteredArr = holdarr;  // filteredArr now composed of all unique flight data values
                
                 this.setState({
                    greenFlights: filteredArr
                })
-               } 
+          } 
 
                renderList = () => {  // Inserts each green flight data into ordered list to DOM.
                    if(filteredArr.length && this.state.greenFlights.length)

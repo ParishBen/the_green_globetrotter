@@ -4,8 +4,6 @@ import {amadeus} from '../amadeusAPI';
 
 
 
-
-
 export default class TripFetcher extends Component{
 
 constructor(){
@@ -17,67 +15,41 @@ constructor(){
         persons: null, 
     }
 }
-
-    componentDidMount(){
-       
-    }
-
-
-
-
-
-
     
 /////////////////////////////////////////////////
-         flightFetcher = (event) => {
-             event.preventDefault()
-             console.log(
-                 'fetching flights!'
-             )
-            // this.reset()
-            let bigtimeArr = [];
-            amadeus.shopping.flightOffersSearch.get({
-              originLocationCode: `${this.state.origin}`,
-              destinationLocationCode: `${this.state.destination}`,
-              departureDate: `${this.state.departureDate}`,
-              adults: parseInt(`${this.state.persons}`)
-            }).then((response) => {
-             
-                bigtimeArr = response.data;
-                //console.log(bigtimeArr)
-               this.props.flights && this.props.flights(response.data);
-               this.setState({
-                origin: null,
-                destination: null,
-                departureDate: '',
-                persons: null, 
-                        })
-            })
-            .then(() => {
-                //console.log("bigtimearr",bigtimeArr)
-                
-                //this.state.flights = bigtimeArr
-            })
-            
-            .catch(function(responseError){
-              console.log(responseError);
+    flightFetcher = (event) => {
+        event.preventDefault()
+        console.log(
+            'fetching flights!'
+        )
+    let bigtimeArr = [];
+    amadeus.shopping.flightOffersSearch.get({          // Fetching flights from Amadeus API with user's form inputs
+        originLocationCode: `${this.state.origin}`,
+        destinationLocationCode: `${this.state.destination}`,
+        departureDate: `${this.state.departureDate}`,
+        adults: parseInt(`${this.state.persons}`)
+    }).then((response) => {   
+        bigtimeArr = response.data;
+            this.props.flights && this.props.flights(response.data); // Sending flight data back to App as callback fn.
+        this.setState({
+        origin: null,
+        destination: null,
+        departureDate: '',
+        persons: null, 
+                })
+    })
+    .catch(function(responseError){
+        console.log(responseError);
             });}
 //////////////////////////////////////////////////////
-handleFormInfoChange(event) {                 // Signing in to Landing Page handling value changes
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
-// reset = () =>{
-//     document.getElementById('origin').value = ''
-//     document.getElementById('destination').value = ''
-//     document.getElementById('departureDate').value = ''
-//     document.getElementById('persons').value = ''
-//     //document.getElementById('form').firstChild.textContent = ''
-// }
+    handleFormInfoChange(event) {   // Handling value changes of form & setting State to corresponding values
+        this.setState({
+         [event.target.name]: event.target.value,
+        });
+    }
 
          render(){
-             
+             // Can put text in <label> later
              return (
                 <div>
                     
@@ -91,7 +63,7 @@ handleFormInfoChange(event) {                 // Signing in to Landing Page hand
                 </div>
                 
              )
-             }
-         }
+        }
+}
 
 
